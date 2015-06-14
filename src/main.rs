@@ -13,11 +13,22 @@ fn main() {
     }
 
     match mainarg.unwrap().as_ref() {
+        "help" => display_help(),
         "test" => run_tests(),
         "coverage" => run_coverage(),
         _ => panic!("Invalid parameter"),
     }
 
+}
+
+
+fn display_help() {
+    println!("dj - shortcuts for Django development");
+    println!("Usage: dj [SHORTCUT]");
+    println!("");
+    println!("SHORTCUT:");
+    println!("  test: run Django's unit test engine with Python 3");
+    println!("  coverage: run a coverage report with the unit tests");
 }
 
 
