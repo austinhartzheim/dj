@@ -14,6 +14,7 @@ fn main() {
 
     match mainarg.unwrap().as_ref() {
         "test" => run_tests(),
+        "coverage" => run_coverage(),
         _ => panic!("Invalid parameter"),
     }
 
@@ -34,4 +35,32 @@ fn run_tests() {
     println!("{}", String::from_utf8_lossy(&output.stdout));
     println!("{}", String::from_utf8_lossy(&output.stderr));
 
+}
+
+
+fn run_coverage() {
+    // Run tests with coverage tracking enabled
+    println!("Running tests with coverage...");
+
+    let output = Command::new("coverage")
+        .arg("run")
+        .arg("manage.py")
+        .arg("test")
+        .stdout(Stdio::inherit())
+        .output()
+        .unwrap_or_else(|e| {
+            panic!("Failed to execute process: {}", e)
+        });
+    println!("{}", String::from_utf8_lossy(&output.stdout));
+    println!("{}", String::from_utf8_lossy(&output.stderr));
+
+    // Display the coverage report
+    let report = Command::new("coverage")
+        .arg("report")
+        .stdout(Stdio::inherit())
+        .output()
+        .unwrap_or_else(|e| {
+            panic!("Failed to execute process: {}", e)
+        });
+    println!("{}", String::from_utf8_lossy(&output.stdout));
 }
